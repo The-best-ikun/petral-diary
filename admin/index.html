@@ -4,17 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
-  <title>Petal Diary Admin - 内容管理后台</title>
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  
-  <!-- Decap CMS -->
-  <script src="https://unpkg.com/decap-cms-app@^3.0.0/dist/decap-cms-app.js"></script>
-  
-  <!-- Custom Admin Styles -->
+  <title>Petal Diary Admin</title>
+
+  <!-- 粉色主题变量 -->
   <style>
     :root {
       --primary-pink: #FFB7C5;
@@ -25,229 +17,85 @@
       --font-heading: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
-
     body {
       font-family: var(--font-body);
       background: var(--off-white);
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
     }
+  </style>
 
-    /* Decap CMS 自定义样式 */
-    .cms-container {
+  <!-- 手动初始化标记 -->
+  <script>
+    window.CMS_MANUAL_INIT = true;
+    window.DECAP_CMS_MANUAL_INIT = true;
+  </script>
+
+  <!-- Decap CMS 单文件 -->
+  <script src="js/decap-cms.js"></script>
+
+  <!-- 粉色主题覆盖（直接作用在默认容器） -->
+  <style>
+    #nc-root {
       --primaryColor: var(--primary-pink);
       --primaryDark: #ff8fab;
       --primaryLight: var(--cream-pink);
       --activeBackground: var(--lavender);
-      --controlBackground: #ffffff;
+      --controlBackground: #fff;
       --controlHoverBackground: var(--cream-pink);
       --controlBorder: #e8d5d8;
       --controlLabelColor: var(--text-dark);
       --controlTextColor: var(--text-dark);
-      --textFieldBackground: #ffffff;
+      --textFieldBackground: #fff;
       --textFieldBorder: #e8d5d8;
       --textFieldHoverBorder: var(--primary-pink);
       --textColor: var(--text-dark);
       --textLight: #8b7f77;
       --background: var(--off-white);
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
     }
-
-    /* 标题样式 */
-    .cms-container .cmssidebar > h2 {
-      font-family: var(--font-heading);
-      color: var(--text-dark);
-      font-weight: 700;
-    }
-
-    /* 按钮样式 */
-    .cms-container .btn-container button {
-      font-family: var(--font-heading);
-      font-weight: 600;
-      border-radius: 0.75rem;
-      padding: 0.75rem 1.5rem;
-    }
-
-    .cms-container .btn-container button:active,
-    .cms-container .btn-container button:focus {
-      background: var(--primary-pink);
-    }
-
-    /* 卡片样式 */
-    .cms-container .collection-top > h2 {
-      font-family: var(--font-heading);
-      color: var(--text-dark);
-    }
-
-    .cms-container .collection-card {
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 20px rgba(255, 183, 197, 0.15);
-      border: 1px solid var(--cream-pink);
-    }
-
-    .cms-container .collection-card:hover {
-      box-shadow: 0 12px 30px rgba(255, 183, 197, 0.25);
-    }
-
-    /* 表单样式 */
-    .cms-container .nc-formField {
-      margin-bottom: 1.5rem;
-    }
-
-    .cms-container .nc-control-label {
-      font-family: var(--font-heading);
-      font-weight: 600;
-      color: var(--text-dark);
-    }
-
-    .cms-container .nc-control-input,
-    .cms-container .nc-control-textarea,
-    .cms-container .nc-control-select {
-      border-radius: 0.75rem;
-      border: 1px solid var(--controlBorder);
-      background: var(--textFieldBackground);
-      padding: 0.75rem;
-    }
-
-    .cms-container .nc-control-input:focus,
-    .cms-container .nc-control-textarea:focus,
-    .cms-container .nc-control-select:focus {
-      border-color: var(--primary-pink);
-      box-shadow: 0 0 0 2px rgba(255, 183, 197, 0.2);
-    }
-
-    /* Markdown 编辑器样式 */
-    .cms-container .CodeMirror {
-      border-radius: 0.75rem;
-      border: 1px solid var(--controlBorder);
-    }
-
-    /* 图片上传区域 */
-    .cms-container .nc-file-upload {
-      border-radius: 0.75rem;
-      border: 2px dashed var(--primary-pink);
-      background: var(--cream-pink);
-    }
-
-    /* 预览模式样式 */
-    .cms-container .nc-previewPane {
-      background: white;
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 20px rgba(255, 183, 197, 0.15);
-    }
-
-    /* 欢迎页面装饰 */
-    .cms-container .nc-collectionPage-home-welcome > h2 {
-      font-family: var(--font-heading);
-      color: var(--text-dark);
-    }
-
-    .cms-container .nc-collectionPage-home-welcome > p {
-      color: var(--text-light);
-    }
+    /* 标题 */
+    #nc-root .cmssidebar > h2 { font-family: var(--font-heading); color: var(--text-dark); font-weight: 700; }
+    /* 按钮 */
+    #nc-root .btn-container button { font-family: var(--font-heading); font-weight: 600; border-radius: 0.75rem; }
+    #nc-root .btn-container button:active,
+    #nc-root .btn-container button:focus { background: var(--primary-pink); }
+    /* 卡片 */
+    #nc-root .collection-card { border-radius: 1.5rem; box-shadow: 0 8px 20px rgba(255, 183, 197, 0.15); border: 1px solid var(--cream-pink); }
+    #nc-root .collection-card:hover { box-shadow: 0 12px 30px rgba(255, 183, 197, 0.25); }
+    /* 表单 */
+    #nc-root .nc-control-input,
+    #nc-root .nc-control-textarea,
+    #nc-root .nc-control-select { border-radius: 0.75rem; border: 1px solid var(--controlBorder); background: var(--textFieldBackground); padding: 0.75rem; }
+    #nc-root .nc-control-input:focus,
+    #nc-root .nc-control-textarea:focus,
+    #nc-root .nc-control-select:focus { border-color: var(--primary-pink); box-shadow: 0 0 0 2px rgba(255, 183, 197, 0.2); }
+    /* Markdown 编辑器 */
+    #nc-root .CodeMirror { border-radius: 0.75rem; border: 1px solid var(--controlBorder); }
+    /* 图片上传 */
+    #nc-root .nc-file-upload { border-radius: 0.75rem; border: 2px dashed var(--primary-pink); background: var(--cream-pink); }
   </style>
 </head>
+
 <body>
+  <!-- 默认容器，Decap 3.x 一定会用它 -->
+  <div id="nc-root"></div>
+
   <script>
-    // 初始化Decap CMS
-    CMS.init({
-      config: {
-        backend: {
-          name: 'github',
-          repo: 'The-best-ikun/petal-diary', // 示例：请替换为你的GitHub用户名/仓库名
-          branch: 'master',
-          base_url: 'https://api.netlify.com',
-          site_domain: 'budiu.xyz', // 示例：请替换为你的实际域名
-        },
-        media_folder: 'static/images',
-        public_folder: '/images',
-        publish_mode: 'editorial_workflow',
-        collections: [
-          {
-            name: 'about',
-            label: '我的小花圃',
-            folder: 'src/about',
-            create: false,
-            slug: '{{slug}}',
-            fields: [
-              { label: '标题', name: 'title', widget: 'string' },
-              { label: '描述', name: 'description', widget: 'text' },
-              { label: '个人头像', name: 'avatar', widget: 'image' },
-              { label: '个人标签', name: 'tags', widget: 'list', field: { label: '标签', name: 'tag', widget: 'string' } },
-              { label: '关于我', name: 'about', widget: 'markdown' },
-              { label: '兴趣爱好', name: 'hobbies', widget: 'list', field: { label: '爱好', name: 'hobby', widget: 'string' } },
-              { label: '联系邮箱', name: 'email', widget: 'string', required: false },
-              { label: '社交链接', name: 'social', widget: 'object', fields: [
-                { label: '微博', name: 'weibo', widget: 'string', required: false },
-                { label: 'Instagram', name: 'instagram', widget: 'string', required: false },
-                { label: '小红书', name: 'xiaohongshu', widget: 'string', required: false }
-              ]}
-            ]
-          },
-          {
-            name: 'recipes',
-            label: '甜蜜食谱',
-            folder: 'src/recipes',
-            create: true,
-            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
-            fields: [
-              { label: '标题', name: 'title', widget: 'string' },
-              { label: '描述', name: 'description', widget: 'text' },
-              { label: '封面图片', name: 'cover', widget: 'image' },
-              { label: '分类', name: 'category', widget: 'select', options: ['烘焙', '甜品', '饮品', '家常菜', '其他'] },
-              { label: '制作时间', name: 'cooking_time', widget: 'string', hint: '例如：30分钟' },
-              { label: '难度等级', name: 'difficulty', widget: 'select', options: ['简单', '中等', '困难'] },
-              { label: '食材清单', name: 'ingredients', widget: 'list', field: { label: '食材', name: 'ingredient', widget: 'string' } },
-              { label: '制作步骤', name: 'steps', widget: 'list', field: { label: '步骤', name: 'step', widget: 'markdown' } },
-              { label: '小贴士', name: 'tips', widget: 'markdown', required: false },
-              { label: '标签', name: 'tags', widget: 'list', field: { label: '标签', name: 'tag', widget: 'string' } },
-              { label: '发布日期', name: 'date', widget: 'datetime', default: '{{now}}' }
-            ]
-          },
-          {
-            name: 'travels',
-            label: '漫游地图',
-            folder: 'src/travels',
-            create: true,
-            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
-            fields: [
-              { label: '标题', name: 'title', widget: 'string' },
-              { label: '描述', name: 'description', widget: 'text' },
-              { label: '封面图片', name: 'cover', widget: 'image' },
-              { label: '地点', name: 'location', widget: 'string', hint: '例如：日本·东京' },
-              { label: '旅行日期', name: 'travel_date', widget: 'datetime', format: 'YYYY-MM-DD' },
-              { label: '旅行天数', name: 'duration', widget: 'string', hint: '例如：5天4夜' },
-              { label: '旅行类型', name: 'travel_type', widget: 'select', options: ['休闲度假', '文化探索', '美食之旅', '购物之旅', '自然风光', '城市漫步'] },
-              { label: '游记内容', name: 'content', widget: 'markdown' },
-              { label: '照片集', name: 'gallery', widget: 'list', field: { label: '照片', name: 'photo', widget: 'image' } },
-              { label: '推荐理由', name: 'recommendation', widget: 'markdown', required: false },
-              { label: '旅行小贴士', name: 'tips', widget: 'markdown', required: false },
-              { label: '标签', name: 'tags', widget: 'list', field: { label: '标签', name: 'tag', widget: 'string' } },
-              { label: '发布日期', name: 'date', widget: 'datetime', default: '{{now}}' }
-            ]
-          },
-          {
-            name: 'notes',
-            label: '灵感笔记',
-            folder: 'src/notes',
-            create: true,
-            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
-            fields: [
-              { label: '标题', name: 'title', widget: 'string' },
-              { label: '描述', name: 'description', widget: 'text' },
-              { label: '封面图片', name: 'cover', widget: 'image', required: false },
-              { label: '分类', name: 'category', widget: 'select', options: ['学习笔记', '读书笔记', '电影观后感', '生活感悟', '创意灵感', '技能提升'] },
-              { label: '笔记内容', name: 'content', widget: 'markdown' },
-              { label: '重要摘录', name: 'quotes', widget: 'list', field: { label: '摘录', name: 'quote', widget: 'text' }, required: false },
-              { label: '相关链接', name: 'links', widget: 'list', field: { label: '链接', name: 'link', widget: 'object', fields: [
-                { label: '链接标题', name: 'title', widget: 'string' },
-                { label: '链接地址', name: 'url', widget: 'string' }
-              ]}, required: false },
-              { label: '个人感悟', name: 'reflection', widget: 'markdown', required: false },
-              { label: '标签', name: 'tags', widget: 'list', field: { label: '标签', name: 'tag', widget: 'string' } },
-              { label: '发布日期', name: 'date', widget: 'datetime', default: '{{now}}' }
-            ]
-          }
-        ]
+    function initDecapCMS() {
+      const cms = window.DecapCMS || window.CMS;
+      if (cms) {
+        cms.init(); // 不传 container，默认就是 #nc-root
+        console.log('✅ Decap CMS 已挂载到默认 #nc-root');
+      } else {
+        console.error('❌ Decap CMS 全局变量未挂载');
       }
-    });
+    }
+    document.addEventListener('DOMContentLoaded', () => setTimeout(initDecapCMS, 1000));
+    window.addEventListener('load', initDecapCMS);
   </script>
 </body>
 </html>

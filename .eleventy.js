@@ -17,6 +17,11 @@ module.exports = function(eleventyConfig) {
   });
 
   eleventyConfig.setLibrary("md", mdLib);
+  // 关键：显式指定 charset
+  eleventyConfig.addPassthroughCopy("config.yml", {
+    encoding: "utf-8",
+    contentType: "text/yaml; charset=utf-8"
+  });
 
   // 确保UTF-8编码
   eleventyConfig.addGlobalData("encoding", "utf-8");
@@ -27,7 +32,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("_data");
   eleventyConfig.addPassthroughCopy("src/styles");
   eleventyConfig.addPassthroughCopy("src/js");
-
+  eleventyConfig.addPassthroughCopy("config.yaml");
   // 日期格式化过滤器
   eleventyConfig.addFilter("postDate", (dateObj) => {
     return new Date(dateObj).toLocaleDateString('zh-CN', {

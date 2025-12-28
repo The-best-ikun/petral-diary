@@ -1,0 +1,93 @@
+backend:
+  name: github
+  repo: The-best-ikun/petal-diary  # 示例：请替换为你的GitHub用户名/仓库名
+  branch: master
+  base_url: https://api.netlify.com
+  site_domain: budiu.xyz  # 示例：请替换为你的实际域名
+
+media_folder: "static/images"
+public_folder: "/images"
+
+publish_mode: editorial_workflow
+
+collections:
+  # 我的小花圃 - 个人简介（单页）
+  - name: "about"
+    label: "我的小花圃"
+    folder: "src/about"
+    create: false
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "描述", name: "description", widget: "text" }
+      - { label: "个人头像", name: "avatar", widget: "image" }
+      - { label: "个人标签", name: "tags", widget: "list", field: { label: "标签", name: "tag", widget: "string" } }
+      - { label: "关于我", name: "about", widget: "markdown" }
+      - { label: "兴趣爱好", name: "hobbies", widget: "list", field: { label: "爱好", name: "hobby", widget: "string" } }
+      - { label: "联系邮箱", name: "email", widget: "string", required: false }
+      - { label: "社交链接", name: "social", widget: "object", fields: [
+          { label: "微博", name: "weibo", widget: "string", required: false },
+          { label: "Instagram", name: "instagram", widget: "string", required: false },
+          { label: "小红书", name: "xiaohongshu", widget: "string", required: false }
+        ]}
+
+  # 甜蜜食谱
+  - name: "recipes"
+    label: "甜蜜食谱"
+    folder: "src/recipes"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "描述", name: "description", widget: "text" }
+      - { label: "封面图片", name: "cover", widget: "image" }
+      - { label: "分类", name: "category", widget: "select", options: ["烘焙", "甜品", "饮品", "家常菜", "其他"] }
+      - { label: "制作时间", name: "cooking_time", widget: "string", hint: "例如：30分钟" }
+      - { label: "难度等级", name: "difficulty", widget: "select", options: ["简单", "中等", "困难"] }
+      - { label: "食材清单", name: "ingredients", widget: "list", field: { label: "食材", name: "ingredient", widget: "string" } }
+      - { label: "制作步骤", name: "steps", widget: "list", field: { label: "步骤", name: "step", widget: "markdown" } }
+      - { label: "小贴士", name: "tips", widget: "markdown", required: false }
+      - { label: "标签", name: "tags", widget: "list", field: { label: "标签", name: "tag", widget: "string" } }
+      - { label: "发布日期", name: "date", widget: "datetime", default: "{{now}}" }
+
+  # 漫游地图
+  - name: "travels"
+    label: "漫游地图"
+    folder: "src/travels"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "描述", name: "description", widget: "text" }
+      - { label: "封面图片", name: "cover", widget: "image" }
+      - { label: "地点", name: "location", widget: "string", hint: "例如：日本·东京" }
+      - { label: "旅行日期", name: "travel_date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "旅行天数", name: "duration", widget: "string", hint: "例如：5天4夜" }
+      - { label: "旅行类型", name: "travel_type", widget: "select", options: ["休闲度假", "文化探索", "美食之旅", "购物之旅", "自然风光", "城市漫步"] }
+      - { label: "游记内容", name: "content", widget: "markdown" }
+      - { label: "照片集", name: "gallery", widget: "list", field: { label: "照片", name: "photo", widget: "image" } }
+      - { label: "推荐理由", name: "recommendation", widget: "markdown", required: false }
+      - { label: "旅行小贴士", name: "tips", widget: "markdown", required: false }
+      - { label: "标签", name: "tags", widget: "list", field: { label: "标签", name: "tag", widget: "string" } }
+      - { label: "发布日期", name: "date", widget: "datetime", default: "{{now}}" }
+
+  # 灵感笔记
+  - name: "notes"
+    label: "灵感笔记"
+    folder: "src/notes"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "描述", name: "description", widget: "text" }
+      - { label: "封面图片", name: "cover", widget: "image", required: false }
+      - { label: "分类", name: "category", widget: "select", options: ["学习笔记", "读书笔记", "电影观后感", "生活感悟", "创意灵感", "技能提升"] }
+      - { label: "笔记内容", name: "content", widget: "markdown" }
+      - { label: "重要摘录", name: "quotes", widget: "list", field: { label: "摘录", name: "quote", widget: "text" }, required: false }
+      - { label: "相关链接", name: "links", widget: "list", field: { label: "链接", name: "link", widget: "object", fields: [
+          { label: "链接标题", name: "title", widget: "string" },
+          { label: "链接地址", name: "url", widget: "string" }
+        ]}, required: false }
+      - { label: "个人感悟", name: "reflection", widget: "markdown", required: false }
+      - { label: "标签", name: "tags", widget: "list", field: { label: "标签", name: "tag", widget: "string" } }
+      - { label: "发布日期", name: "date", widget: "datetime", default: "{{now}}" }
