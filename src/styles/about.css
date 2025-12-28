@@ -1,0 +1,372 @@
+/* 我的小花圃 - 个人简介页面样式 */
+
+.about-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-lg) var(--spacing-md);
+}
+
+/* 英雄区域 */
+.about-hero {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+}
+
+.about-avatar {
+  position: relative;
+  display: inline-block;
+  margin-bottom: var(--spacing-lg);
+}
+
+.avatar-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 6px solid var(--cream-pink);
+  box-shadow: var(--shadow-soft);
+  object-fit: cover;
+  transition: border-color 0.3s ease;
+}
+
+.avatar-decoration {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  pointer-events: none;
+}
+
+.avatar-decoration span {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+.avatar-decoration span:nth-child(1) {
+  top: 0;
+  left: 0;
+  animation-delay: 0s;
+}
+
+.avatar-decoration span:nth-child(2) {
+  top: 0;
+  right: 0;
+  animation-delay: 1s;
+}
+
+.avatar-decoration span:nth-child(3) {
+  bottom: 0;
+  right: 0;
+  animation-delay: 2s;
+}
+
+.about-intro h1 {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  font-size: 2.5rem;
+  margin: 0 0 var(--spacing-sm);
+  transition: color 0.3s ease;
+}
+
+.about-subtitle {
+  font-family: var(--font-heading);
+  color: var(--primary-pink);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 var(--spacing-md);
+  transition: color 0.3s ease;
+}
+
+.about-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.9;
+  transition: color 0.3s ease;
+}
+
+/* 内容区域 */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.about-section {
+  text-align: center;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: var(--text-dark);
+  margin: 0 0 var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  transition: color 0.3s ease;
+}
+
+.title-icon {
+  font-size: 1.5rem;
+  animation: bounce 2s infinite;
+}
+
+.content-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-soft);
+  text-align: left;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+.content-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.content-card p {
+  line-height: 1.8;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-dark);
+  transition: color 0.3s ease;
+}
+
+.content-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* 标签云 */
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tag {
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-soft);
+  transition: all 0.3s ease;
+}
+
+.tag:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 兴趣爱好网格 */
+.hobbies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.hobby-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+  transition: all 0.3s ease;
+  color: var(--text-dark);
+}
+
+.hobby-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.hobby-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+  display: block;
+  animation: bounce 2s infinite;
+  transition: opacity 0.3s ease;
+}
+
+.hobby-card:nth-child(2) .hobby-icon {
+  animation-delay: 0.5s;
+}
+
+.hobby-card:nth-child(3) .hobby-icon {
+  animation-delay: 1s;
+}
+
+.hobby-card:nth-child(4) .hobby-icon {
+  animation-delay: 1.5s;
+}
+
+.hobby-card h3 {
+  font-family: var(--font-heading);
+  color: var(--text-dark);
+  margin: 0 0 var(--spacing-sm);
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.hobby-card p {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-light);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* 联系信息 */
+.contact-card {
+  background: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-soft);
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+.contact-card p {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-dark);
+  transition: color 0.3s ease;
+}
+
+.contact-links {
+  display: grid;
+  gap: var(--spacing-sm);
+  text-align: left;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--cream-pink);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+  background: var(--lavender);
+  transform: translateX(5px);
+  color: var(--text-dark);
+}
+
+.contact-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+  transition: opacity 0.3s ease;
+}
+
+/* 页脚区域 */
+.about-footer {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--gradient-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+.footer-message p {
+  font-family: var(--font-heading);
+  margin: var(--spacing-sm) 0;
+  color: var(--text-dark);
+  transition: color 0.3s ease;
+}
+
+.footer-message p:first-child {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-pink);
+  transition: color 0.3s ease;
+}
+
+.footer-message p:last-child {
+  font-size: 1rem;
+  color: var(--text-dark);
+  opacity: 0.8;
+  transition: color 0.3s ease;
+}
+
+.footer-decoration {
+  margin-top: var(--spacing-md);
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.footer-decoration span {
+  font-size: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+.footer-decoration span:nth-child(1) { animation-delay: 0s; }
+.footer-decoration span:nth-child(2) { animation-delay: 0.5s; }
+.footer-decoration span:nth-child(3) { animation-delay: 1s; }
+.footer-decoration span:nth-child(4) { animation-delay: 1.5s; }
+.footer-decoration span:nth-child(5) { animation-delay: 2s; }
+
+/* 夜晚模式特定样式 */
+[data-theme="dark"] .contact-link:hover {
+  background: var(--lavender);
+  filter: brightness(1.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .about-intro h1 {
+    font-size: 2rem;
+  }
+  
+  .about-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .about-description {
+    font-size: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .hobbies-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tags-cloud {
+    max-width: 100%;
+  }
+  
+  .contact-links {
+    grid-template-columns: 1fr;
+  }
+}

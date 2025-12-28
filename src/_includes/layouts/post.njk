@@ -1,0 +1,518 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="post-article">
+  <!-- 返回按钮 -->
+  <div class="post-navigation">
+    <button class="back-button" onclick="goBack()">
+      <span class="back-icon">←</span>
+      <span class="back-text">返回上页</span>
+    </button>
+    <div class="breadcrumb">
+      <a href="/">首页</a>
+      {% if '/recipes/' in page.url %}
+        <span class="separator">›</span>
+        <a href="/recipes">甜蜜食谱</a>
+      {% elif '/travels/' in page.url %}
+        <span class="separator">›</span>
+        <a href="/travels">漫游地图</a>
+      {% elif '/notes/' in page.url %}
+        <span class="separator">›</span>
+        <a href="/notes">灵感笔记</a>
+      {% endif %}
+      <span class="separator">›</span>
+      <span class="current">{{ title }}</span>
+    </div>
+  </div>
+
+  <!-- 文章头部 -->
+  <header class="post-header">
+    {% if cover %}
+      <div class="post-cover">
+        <img src="{{ cover }}" alt="{{ title }}" loading="lazy">
+        <div class="cover-overlay"></div>
+      </div>
+    {% endif %}
+    
+    <div class="post-meta-header">
+      <div class="post-category">
+        {% if category %}
+          <span class="category-tag">{{ category }}</span>
+        {% endif %}
+        {% if date %}
+          <span class="post-date">{{ date | postDate }}</span>
+        {% endif %}
+      </div>
+      <h1 class="post-title">{{ title }}</h1>
+      {% if description %}
+        <p class="post-description">{{ description }}</p>
+      {% endif %}
+    </div>
+  </header>
+
+  <!-- 文章内容 -->
+  <div class="post-content">
+    <!-- 页面主要内容（Markdown正文） -->
+    {{ content | safe }}
+    
+    <!-- 图片画廊 -->
+    {% if gallery %}
+      <section class="post-gallery">
+        <h2 class="gallery-title">📸 精彩瞬间</h2>
+        <div class="gallery-grid">
+          {% for image_url in gallery %}
+            <div class="gallery-item">
+              <img src="{{ image_url }}" alt="图片 {{ loop.index }}" loading="lazy">
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+    
+    <!-- 如果有结构化数据，则显示额外内容 -->
+    {% if ingredients or cooking_time or difficulty or steps or tips or quotes or reflection or links %}
+    <div class="structured-content">
+      <!-- 食谱特有的内容结构 -->
+      {% if ingredients %}
+        <section class="recipe-ingredients">
+          <h2>📝 食材准备</h2>
+          <div class="ingredients-list">
+            {% for ingredient_group in ingredients %}
+              {% if ':' in ingredient_group %}
+                <div class="ingredient-group">
+                  <h4>{{ ingredient_group | split(':') | first }}</h4>
+                  <p>{{ ingredient_group | split(':') | last }}</p>
+                </div>
+              {% else %}
+                <div class="ingredient-item">
+                  <span class="ingredient-bullet">•</span>
+                  <span>{{ ingredient_group }}</span>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% if cooking_time or difficulty %}
+        <section class="recipe-info">
+          <h2>⏱️ 制作信息</h2>
+          <div class="info-grid">
+            {% if cooking_time %}
+              <div class="info-item">
+                <span class="info-icon">⏰</span>
+                <span class="info-label">制作时间</span>
+                <span class="info-value">{{ cooking_time }}</span>
+              </div>
+            {% endif %}
+            {% if difficulty %}
+              <div class="info-item">
+                <span class="info-icon">📊</span>
+                <span class="info-label">难度等级</span>
+                <span class="info-value">{{ difficulty }}</span>
+              </div>
+            {% endif %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% if steps %}
+        <section class="recipe-steps">
+          <h2>👩‍🍳 制作步骤</h2>
+          <div class="steps-container">
+            {% for step in steps %}
+              <div class="step-item">
+                <div class="step-number">{{ loop.index }}</div>
+                <div class="step-content">{{ step | markdownify | safe }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% if tips %}
+        <section class="recipe-tips">
+          <h2>💡 制作贴士</h2>
+          <div class="tips-content">{{ tips | markdownify | safe }}</div>
+        </section>
+      {% endif %}
+
+      <!-- 读书笔记特有内容 -->
+      {% if quotes %}
+        <section class="book-quotes">
+          <h2>💫 经典语录</h2>
+          <div class="quotes-list">
+            {% for quote in quotes %}
+              <blockquote class="quote-item">
+                <p>{{ quote }}</p>
+              </blockquote>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+
+      {% if reflection %}
+        <section class="personal-reflection">
+          <h2>💭 个人感悟</h2>
+          <div class="reflection-content">{{ reflection | markdownify | safe }}</div>
+        </section>
+      {% endif %}
+
+      {% if links %}
+        <section class="related-links">
+          <h2>🔗 相关链接</h2>
+          <div class="links-list">
+            {% for link in links %}
+              <div class="link-item">
+                <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+                  <span class="link-icon">🌐</span>
+                  <span class="link-title">{{ link.title }}</span>
+                  <span class="link-external">↗</span>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- 文章底部 -->
+  <footer class="post-footer">
+    {% if tags %}
+      <div class="post-tags">
+        <span class="tags-label">🏷️ 标签：</span>
+        <div class="tags-list">
+          {% for tag in tags %}
+            <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    
+    <div class="post-actions">
+      <button class="action-button" onclick="sharePost()">
+        <span class="button-icon">📤</span>
+        <span class="button-text">分享文章</span>
+      </button>
+      <button class="action-button" onclick="toggleComments()">
+        <span class="button-icon">💬</span>
+        <span class="button-text">留言讨论</span>
+      </button>
+    </div>
+  </footer>
+</article>
+
+<!-- 文章独立评论区 -->
+<section id="post-comments" class="post-comments-section">
+  <div class="comments-container">
+    <h2 class="comments-title">💬 留言讨论</h2>
+    <div class="comments-subtitle">
+      关于《{{ title }}》的想法和感悟
+    </div>
+    
+    <!-- 留言表单 -->
+    <div class="comment-form">
+      <h3>写下你的想法</h3>
+      <form id="comment-form" class="comment-form-inner">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="comment-name">昵称</label>
+            <input type="text" id="comment-name" name="name" required placeholder="请输入你的昵称">
+          </div>
+          <div class="form-group">
+            <label for="comment-email">邮箱</label>
+            <input type="email" id="comment-email" name="email" required placeholder="邮箱不会公开显示">
+          </div>
+        </div>
+        
+        <div class="form-group full-width">
+          <label for="comment-content">留言内容</label>
+          <textarea id="comment-content" name="content" required placeholder="分享你对这篇文章的想法..." rows="4"></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">
+            <span class="btn-icon">🌸</span>
+            发布留言
+          </button>
+          <button type="reset" class="reset-btn">
+            清空内容
+          </button>
+        </div>
+      </form>
+    </div>
+    
+    <!-- 留言列表 -->
+    <div class="comments-list">
+      <h3>全部留言</h3>
+      <div id="comments-container" class="comments-container-inner">
+        <!-- 留言将通过JavaScript动态加载 -->
+        <div class="no-comments">
+          <div class="no-comments-icon">💭</div>
+          <p>还没有留言，来做第一个分享想法的人吧！</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 留言功能JavaScript -->
+<script>
+// 留言数据管理
+class PostComments {
+  constructor() {
+    this.postId = window.location.pathname;
+    this.comments = this.loadComments();
+    this.init();
+  }
+  
+  init() {
+    this.bindEvents();
+    this.renderComments();
+  }
+  
+  // 加载该文章的留言
+  loadComments() {
+    const allComments = JSON.parse(localStorage.getItem('petal-diary-comments') || '{}');
+    return allComments[this.postId] || [];
+  }
+  
+  // 保存留言
+  saveComments() {
+    const allComments = JSON.parse(localStorage.getItem('petal-diary-comments') || '{}');
+    allComments[this.postId] = this.comments;
+    localStorage.setItem('petal-diary-comments', JSON.stringify(allComments));
+  }
+  
+  // 绑定事件
+  bindEvents() {
+    const form = document.getElementById('comment-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.addComment();
+      });
+    }
+  }
+  
+  // 添加留言
+  addComment() {
+    const nameInput = document.getElementById('comment-name');
+    const emailInput = document.getElementById('comment-email');
+    const contentInput = document.getElementById('comment-content');
+    
+    const comment = {
+      id: Date.now(),
+      name: nameInput.value.trim(),
+      email: emailInput.value.trim(),
+      content: contentInput.value.trim(),
+      timestamp: new Date().toISOString(),
+      postId: this.postId
+    };
+    
+    // 验证
+    if (!comment.name || !comment.email || !comment.content) {
+      showToast('请填写完整信息');
+      return;
+    }
+    
+    // 添加到留言列表
+    this.comments.unshift(comment);
+    this.saveComments();
+    this.renderComments();
+    
+    // 清空表单
+    document.getElementById('comment-form').reset();
+    
+    // 显示成功提示
+    showToast('留言发布成功！感谢你的分享 🌸');
+    
+    // 滚动到留言列表
+    setTimeout(() => {
+      document.getElementById('comments-container').scrollIntoView({ behavior: 'smooth' });
+    }, 500);
+  }
+  
+  // 渲染留言列表
+  renderComments() {
+    const container = document.getElementById('comments-container');
+    
+    if (this.comments.length === 0) {
+      container.innerHTML = `
+        <div class="no-comments">
+          <div class="no-comments-icon">💭</div>
+          <p>还没有留言，来做第一个分享想法的人吧！</p>
+        </div>
+      `;
+      return;
+    }
+    
+    const commentsHTML = this.comments.map(comment => this.createCommentHTML(comment)).join('');
+    container.innerHTML = commentsHTML;
+    
+    // 绑定删除和回复按钮事件
+    this.bindCommentActions();
+  }
+  
+  // 创建单个留言HTML
+  createCommentHTML(comment) {
+    const date = new Date(comment.timestamp);
+    const dateStr = this.formatDate(date);
+    
+    return `
+      <div class="comment-item" data-comment-id="${comment.id}">
+        <div class="comment-header">
+          <div class="comment-avatar">
+            <span class="avatar-emoji">🌸</span>
+          </div>
+          <div class="comment-meta">
+            <div class="comment-author">${this.escapeHtml(comment.name)}</div>
+            <div class="comment-date">${dateStr}</div>
+          </div>
+          <div class="comment-actions">
+            <button class="comment-btn reply-btn" onclick="postComments.replyToComment('${comment.id}')">
+              💬 回复
+            </button>
+            <button class="comment-btn delete-btn" onclick="postComments.deleteComment('${comment.id}')">
+              🗑️ 删除
+            </button>
+          </div>
+        </div>
+        <div class="comment-content">${this.escapeHtml(comment.content)}</div>
+      </div>
+    `;
+  }
+  
+  // 删除留言
+  deleteComment(commentId) {
+    if (confirm('确定要删除这条留言吗？')) {
+      this.comments = this.comments.filter(c => c.id != commentId);
+      this.saveComments();
+      this.renderComments();
+      showToast('留言已删除');
+    }
+  }
+  
+  // 回复留言
+  replyToComment(commentId) {
+    const comment = this.comments.find(c => c.id == commentId);
+    if (comment) {
+      const contentInput = document.getElementById('comment-content');
+      contentInput.value = `@${comment.name} ${contentInput.value}`;
+      contentInput.focus();
+    }
+  }
+  
+  // 格式化日期
+  formatDate(date) {
+    const now = new Date();
+    const diff = now - date;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    
+    if (days === 0) {
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      if (hours === 0) {
+        const minutes = Math.floor(diff / (1000 * 60));
+        return minutes === 0 ? '刚刚' : `${minutes}分钟前`;
+      }
+      return `${hours}小时前`;
+    } else if (days === 1) {
+      return '昨天';
+    } else if (days < 7) {
+      return `${days}天前`;
+    } else {
+      return date.toLocaleDateString('zh-CN');
+    }
+  }
+  
+  // HTML转义
+  escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+}
+
+// 页面加载完成后初始化留言功能
+document.addEventListener('DOMContentLoaded', function() {
+  window.postComments = new PostComments();
+});
+</script>
+
+<!-- JavaScript -->
+<script>
+function goBack() {
+  if (document.referrer && document.referrer.includes(window.location.hostname)) {
+    history.back();
+  } else {
+    // 根据当前页面类型返回到对应的列表页
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('/recipes/')) {
+      window.location.href = '/recipes';
+    } else if (currentPath.includes('/travels/')) {
+      window.location.href = '/travels';
+    } else if (currentPath.includes('/notes/')) {
+      window.location.href = '/notes';
+    } else {
+      window.location.href = '/';
+    }
+  }
+}
+
+function sharePost() {
+  if (navigator.share) {
+    navigator.share({
+      title: document.title,
+      text: document.querySelector('meta[name="description"]')?.content || '',
+      url: window.location.href
+    }).catch(err => console.log('分享失败:', err));
+  } else {
+    // 复制链接到剪贴板
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      showToast('链接已复制到剪贴板！');
+    }).catch(() => {
+      showToast('复制失败，请手动复制链接');
+    });
+  }
+}
+
+function toggleComments() {
+  const commentsSection = document.getElementById('post-comments');
+  if (commentsSection) {
+    commentsSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.className = 'toast-message';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.classList.add('show');
+  }, 100);
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 300);
+  }, 3000);
+}
+
+// 页面加载完成后的动画
+document.addEventListener('DOMContentLoaded', function() {
+  // 为步骤添加渐入动画
+  const steps = document.querySelectorAll('.step-item');
+  steps.forEach((step, index) => {
+    setTimeout(() => {
+      step.style.opacity = '1';
+      step.style.transform = 'translateY(0)';
+    }, index * 100);
+  });
+});
+</script>

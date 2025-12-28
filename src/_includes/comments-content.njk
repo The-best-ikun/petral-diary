@@ -1,0 +1,145 @@
+<div class="comments-section">
+  <div class="comments-header">
+    <h1 class="comments-title">
+      <span class="title-icon">💕</span>
+      留言板
+      <span class="title-icon">💕</span>
+    </h1>
+    <p class="comments-subtitle">在这里分享你的想法，让美好留言如花朵般绽放</p>
+  </div>
+
+  <!-- 留言表单 -->
+  <div class="comment-form-container">
+    <form id="comment-form">
+      <div class="form-group">
+        <label for="comment-author" class="form-label">
+          <span class="label-icon">🌸</span>
+          你的昵称
+        </label>
+        <input 
+          type="text" 
+          id="comment-author" 
+          class="form-input" 
+          placeholder="请输入你的可爱昵称~"
+          maxlength="20"
+          required
+        >
+      </div>
+      
+      <div class="form-group">
+        <label for="comment-content" class="form-label">
+          <span class="label-icon">💌</span>
+          留言内容
+        </label>
+        <textarea 
+          id="comment-content" 
+          class="form-textarea" 
+          placeholder="写下你想说的话吧~ 💕"
+          maxlength="500"
+          required
+        ></textarea>
+      </div>
+      
+      <button type="submit" class="form-submit-btn">
+        <span class="btn-icon">🌸</span>
+        发送留言
+      </button>
+    </form>
+  </div>
+
+  <!-- 留言列表 -->
+  <div id="comments-list" class="comments-list">
+    <!-- 留言将通过 JavaScript 动态加载 -->
+  </div>
+</div>
+
+<style>
+.title-icon {
+  font-size: 2rem;
+  animation: bounce 2s infinite;
+}
+
+.title-icon:first-child {
+  animation-delay: 0s;
+}
+
+.title-icon:last-child {
+  animation-delay: 1s;
+}
+
+.label-icon {
+  margin-right: var(--spacing-xs);
+}
+
+.btn-icon {
+  margin-right: var(--spacing-xs);
+}
+
+/* 表单输入框的额外样式 */
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text-light);
+  opacity: 0.7;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--primary-pink);
+  box-shadow: 0 0 0 3px rgba(255, 183, 197, 0.2);
+}
+
+/* 字符计数提示 */
+.form-textarea {
+  position: relative;
+}
+
+.form-textarea:focus {
+  outline: none;
+}
+
+/* 表单验证提示 */
+.form-input:invalid,
+.form-textarea:invalid {
+  border-color: #ff6b6b;
+}
+
+.form-input:invalid:focus,
+.form-textarea:invalid:focus {
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+/* 提交按钮加载状态 */
+.form-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.form-submit-btn.loading {
+  position: relative;
+  color: transparent;
+}
+
+.form-submit-btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
+<script src="/js/comments.js"></script>

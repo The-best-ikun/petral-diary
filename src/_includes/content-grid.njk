@@ -1,0 +1,129 @@
+<div class="content-page">
+  <div class="page-header">
+    <h1 class="page-title">
+      <span class="title-icon">{{ page_icon or "📝" }}</span>
+      {{ title }}
+    </h1>
+    <p class="page-subtitle">{{ subtitle }}</p>
+  </div>
+
+  <div class="filters-section">
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      {% for category in filter_categories %}
+        <button class="filter-btn" data-filter="{{ category }}">{{ category }}</button>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="content-grid">
+    {%- set sorted_items = collections[collection_name] | sort('date') | reverse -%}
+    {%- for item in sorted_items -%}
+      {%- if item.url != page.url -%}
+        <article class="content-card {{ card_class }}" data-category="{{ item.data[category_field] }}">
+          <!-- 第1行第1列：图片区域 -->
+          <div class="card-image">
+            {%- if item.data.cover -%}
+              <img src="{{ item.data.cover }}" alt="{{ item.data.title }}" loading="lazy">
+            {%- else -%}
+              <div class="image-placeholder">
+                <span class="placeholder-icon">{{ default_icon }}</span>
+              </div>
+            {%- endif -%}
+          </div>
+          <!-- 第1行第2列：标题区域 -->
+          <div class="card-title-area">
+            <h2 class="card-title">{{ item.data.title }}</h2>
+          </div>
+          <!-- 第2行：描述区域 -->
+          <div class="card-description-area">
+            {% if item.data.description %}
+              <p class="card-description">{{ item.data.description }}</p>
+            {% endif %}
+            <!-- 引用内容 -->
+            {% if item.data.quotes %}
+              <div class="card-quote">
+                <span class="quote-mark">"</span>{{ item.data.quotes[0] }}
+              </div>
+            {% endif %}
+          </div>
+          <!-- 第3行：特殊标签区域 -->
+          <div class="card-meta-area">
+            <div class="card-meta">
+              <!-- 烹饪时间 -->
+              {%- if item.data.cooking_time -%}
+                <div class="meta-item">
+                  <span class="meta-icon">⏱️</span>
+                  <span>{{ item.data.cooking_time }}</span>
+                </div>
+              {%- endif -%}
+              <!-- 难度级别 -->
+              {%- if item.data.difficulty -%}
+                <div class="meta-item">
+                  <span class="meta-icon">🏆</span>
+                  <span>{{ item.data.difficulty }}</span>
+                </div>
+              {%- endif -%}
+              <!-- 成本 -->
+              {%- if item.data.cost -%}
+                <div class="meta-item">
+                  <span class="meta-icon">💰</span>
+                  <span>{{ item.data.cost }}</span>
+                </div>
+              {%- endif -%}
+              <!-- 作者 -->
+              {%- if item.data.author -%}
+                <div class="meta-item">
+                  <span class="meta-icon">👨‍🍳</span>
+                  <span>{{ item.data.author }}</span>
+                </div>
+              {%- endif -%}
+              <!-- 旅行日期 -->
+              {%- if item.data.travel_date -%}
+                <div class="meta-item">
+                  <span class="meta-icon">📅</span>
+                  <span>{{ item.data.travel_date | date("%Y年%m月") }}</span>
+                </div>
+              {%- endif -%}
+              <!-- 旅行时长 -->
+              {%- if item.data.duration -%}
+                <div class="meta-item">
+                  <span class="meta-icon">⏰</span>
+                  <span>{{ item.data.duration }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+          <!-- 第4行：普通标签区域 -->
+          <div class="card-tags-area">
+            {%- if item.data.tags -%}
+              <div class="card-tags">
+                {%- for tag in item.data.tags -%}
+                  <span class="tag">{{ tag }}</span>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+          <!-- 第5行第1列：日期 -->
+          <div class="card-date-area">
+            <span class="card-date">{{ item.date | postDate }}</span>
+          </div>
+          <!-- 第5行第2列：阅读详情 -->
+          <div class="card-read-more-area">
+            <a href="{{ item.url }}" class="read-more">{{ read_more_text }}</a>
+          </div>
+        </article>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <!-- 空状态 -->
+  {% if collections[collection_name] | length == 0 %}
+    <div class="empty-state">
+      <p>{{ empty_message or "暂无内容" }}</p>
+    </div>
+  {% endif %}
+</div>
+
+<!-- 内容筛选脚本 -->
+<script src="/js/content-filter.js"></script>

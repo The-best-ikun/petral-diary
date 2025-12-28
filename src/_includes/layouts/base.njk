@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if title %}{{ title }} - {% endif %}Petal Diary</title>
+    <meta name="description" content="{% if description %}{{ description }}{% else %}Petal Diary - 花瓣手账，记录生活的美好瞬间{% endif %}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/about.css">
+    <link rel="stylesheet" href="/styles/content.css">
+    <link rel="stylesheet" href="/styles/comments.css">
+    <link rel="stylesheet" href="/styles/post.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/static/images/favicon.png" type="image/png">
+</head>
+<body>
+    <!-- 主题切换脚本 -->
+    <script src="/js/theme.js"></script>
+    <header class="site-header">
+        <nav class="nav-container">
+            <div class="nav-logo">
+                <a href="/" class="logo-link">
+                    <span class="logo-icon">🌸</span>
+                    <span class="logo-text">Petal Diary</span>
+                </a>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="切换菜单">
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="/">首页</a></li>
+                <li><a href="/recipes">🍰 甜蜜食谱</a></li>
+                <li><a href="/travels">✈️ 漫游地图</a></li>
+                <li><a href="/notes">📝 灵感笔记</a></li>
+                <li><a href="/comments">💕 留言板</a></li>
+                <li><a href="/about">🌱 我的小花圃</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle-btn" title="切换主题">
+                        <span class="theme-icon">🌙</span>
+                        <span class="theme-text">夜晚</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        {{ content | safe }}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>🌸 Petal Diary</h4>
+                <p>花瓣手账，记录生活的美好瞬间</p>
+            </div>
+            <div class="footer-section">
+                <h4>快速导航</h4>
+                <ul>
+                    <li><a href="/recipes">甜蜜食谱</a></li>
+                    <li><a href="/travels">漫游地图</a></li>
+                    <li><a href="/notes">灵感笔记</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>关于</h4>
+                <p>用心记录每一个美好瞬间，让生活充满诗意与温暖。</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Petal Diary · Made with 💖</p>
+            <div class="footer-decoration">
+                <span>🌸</span>
+                <span>💖</span>
+                <span>✨</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
